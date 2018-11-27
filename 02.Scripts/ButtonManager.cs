@@ -9,6 +9,9 @@ public class ButtonManager : MonoBehaviour {
     //public GameObject SettingBtn;
     //public GameObject StartMSG;
     public GameObject SceneTransitionImage;
+    public GameObject QuitUI;
+    public CameraFollow Camera;
+    public PirateShipController PirateShip;
 
     //GameObject SettingMenu; // 세팅 메뉴  불러오기 - 이메뉴는 처음에는 비활성화
     private bool isPause = false;
@@ -27,14 +30,11 @@ public class ButtonManager : MonoBehaviour {
         }
 
         if (Application.platform == RuntimePlatform.Android)
-        {
             if (Input.GetKey(KeyCode.Escape))
-
             {
-                Application.Quit();
+                isPause = true; //일시정지 시작
+                ActiveQuitUI();
             }
-        }
-
 
         //if (MenuOpen) //메뉴창 ON
         //{
@@ -74,9 +74,25 @@ public class ButtonManager : MonoBehaviour {
         //SceneManager.LoadScene(0); // 처음으로 돌아가기
     }
 
+    // 카메라가 완전히 회전한 다음에 시작 버튼이 비활성화
+    public void disableStartBtn(GameObject offButton)
+    {
+        if (Camera.CameraReady())
+        {
+            offButton.SetActive(false);
+            PirateShip.start(); // 배출발
+        }
+    }
 
+    public void ActiveQuitUI()
+    {
+        QuitUI.SetActive(true);
+    }
 
-
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     //public void ClickMenuButton() //메인메뉴로 돌아가는 버튼
     //{

@@ -39,8 +39,10 @@ public class MiniGameController : MonoBehaviour
         if (player.Life() <= 0)
         {
             GameResultUI.SetActive(true); // 결과창 활성화
+#if UNITY_ANDROID
             ReportScore(score); // 리더보드에 추가
             UnlockAchievement(score); // 업적추가
+#endif
             PlayPauseBtn.SetActive(false); // 결과창 활성화 되었을 때 플레이/일시정지 버튼 비활성화
 
             if (score >= PlayerPrefs.GetInt("BESTSCORE"))
@@ -76,34 +78,37 @@ public class MiniGameController : MonoBehaviour
         }
     }
 
+#if UNITY_ANDROID
     public void ReportScore(int score) // 랭킹 입력
     {
-#if UNITY_ANDROID
+
 
         PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_ranking, null);
     }
 #endif
 
+#if UNITY_ANDROID
     public void UnlockAchievement(int score)
     {
-        if (score >= 50)
+        if (score >= 50 && score < 100)
         {
-#if UNITY_ANDROID
-            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_50, 50f, null);
+
+            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_50, 100f, null);
 
         }
-        else if(score >= 100)
+        else if(score >= 100 && score < 150)
         {
             PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_100, 100f, null);
         }
-        else if (score >= 150)
+        else if (score >= 150 && score < 200)
         {
-            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_150, 150f, null);
+            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_150, 100f, null);
         }
         else if (score >= 200)
         {
-            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_150, 200f, null);
+            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_150, 100f, null);
         }
-#endif
+
     }
+#endif
 }

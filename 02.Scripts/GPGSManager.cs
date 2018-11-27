@@ -59,13 +59,14 @@ public class GPGSManager : MonoBehaviour {
             else
                 stateText.text = "로그인 실패!";
         };
-
+#if !UNITY_EDITOR && UNITY_ANDROID
         // 로그인 되지 않은 상태에서 리더보드 클릭 시 로그인 절차 진행
         if (PlayGamesPlatform.Instance.IsAuthenticated() == false)
             PlayGamesPlatform.Instance.Authenticate(signInCallback);
 
         // 리더보드창 실행
         PlayGamesPlatform.Instance.ShowLeaderboardUI();
+#endif
     }
 
     public void ShowAchievementUI()
@@ -77,6 +78,7 @@ public class GPGSManager : MonoBehaviour {
             else
                 stateText.text = "로그인 실패!";
         };
+#if !UNITY_EDITOR && UNITY_ANDROID
 
         // 로그인 되지 않은 상태에서 업적 클릭 시 로그인 절차 진행
         if (PlayGamesPlatform.Instance.IsAuthenticated() == false)
@@ -84,5 +86,6 @@ public class GPGSManager : MonoBehaviour {
 
         // 업적창 실행
         PlayGamesPlatform.Instance.ShowAchievementsUI();
+#endif
     }
 }

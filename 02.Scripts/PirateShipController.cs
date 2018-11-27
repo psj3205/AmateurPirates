@@ -37,12 +37,9 @@ public class PirateShipController : MonoBehaviour
     void Update()
     {
         //if (life <= 0) Time.timeScale = 0; //죽으면 동작입력 안되게 정지
-        if(controller.velocity.x > 0) // 타이틀화면에 방향입력 안되게 
-        {
-            if (Input.GetKeyDown("left")) MoveToLeft();
-            if (Input.GetKeyDown("right")) MoveToRight();
-            if (Input.GetKeyDown("b")) cannonShooter.Active_CannonBall(0);
-        }
+        if (Input.GetKeyDown("left")) MoveToLeft();
+        if (Input.GetKeyDown("right")) MoveToRight();
+        if (Input.GetKeyDown("b")) cannonShooter.Active_CannonBall(0);
 
         //RaycastHit hit;
 
@@ -63,7 +60,6 @@ public class PirateShipController : MonoBehaviour
                 MoveToLeft();
             else
                 MoveToRight();
-
             //캐릭터 기준 방향 전환
             //if(hit.point.z > transform.position.z + 5)
             //{
@@ -110,15 +106,15 @@ public class PirateShipController : MonoBehaviour
                         break;
                     }
                 }
-                else if (Input.touchCount == 2)
-                {
-                    //tempTouchs = Input.GetTouch(i);
-                    if (Input.GetTouch(0).phase == TouchPhase.Began && Input.GetTouch(1).phase == TouchPhase.Began)
-                    {
-                        cannonShooter.Active_CannonBall(0);
-                        break;
-                    }
-                }
+                //else if (Input.touchCount == 2)
+                //{
+                //    //tempTouchs = Input.GetTouch(i);
+                //    if (Input.GetTouch(0).phase == TouchPhase.Began && Input.GetTouch(1).phase == TouchPhase.Began)
+                //    {
+                //        cannonShooter.Active_CannonBall(0);
+                //        break;
+                //    }
+                //}
             }
         }
 #endif
@@ -145,13 +141,20 @@ public class PirateShipController : MonoBehaviour
 
     public void MoveToRight()
     {
-        SoundManager.instance.PlayMoveSound(); // 이동 효과음 재생
-        if (targetLane > MinLane) targetLane--;
+        if (controller.transform.position.x > 0) // 타이틀화면에 방향입력 안되게 
+        {
+            SoundManager.instance.PlayMoveSound(); // 이동 효과음 재생
+            if (targetLane > MinLane) targetLane--;
+        }
     }
     public void MoveToLeft()
     {
-        SoundManager.instance.PlayMoveSound(); // 이동 효과음 재생
-        if (targetLane < MaxLane) targetLane++;
+        if (controller.transform.position.x > 0) // 타이틀화면에 방향입력 안되게 
+        {
+            SoundManager.instance.PlayMoveSound(); // 이동 효과음 재생
+            if (targetLane < MaxLane) targetLane++;
+        }
+
     }
 
     public void start()

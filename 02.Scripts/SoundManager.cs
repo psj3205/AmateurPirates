@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviour {
     {
         if (SoundManager.instance == null)
             SoundManager.instance = this;
+        else
+            Destroy(this.gameObject);
         for (int i = 0; i < 2; i++)
         {
             audioSources = GetComponents<AudioSource>();
@@ -29,8 +31,10 @@ public class SoundManager : MonoBehaviour {
         audioSources[0].playOnAwake = true;
         audioSources[0].Play();
 
-        audioSources[1].loop = false;
+        audioSources[1].loop = false; ;
         audioSources[1].playOnAwake = false;
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Use this for initialization

@@ -93,7 +93,7 @@ public class StageGenerator : MonoBehaviour
 
     void Active_Map(int idx)
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 1; i < 20; i++)
         {
             if (i % 3 == 0)
             {
@@ -103,7 +103,7 @@ public class StageGenerator : MonoBehaviour
 
                     if (obj_Wall == null) return;
 
-                    obj_Wall.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 0, 0);
+                    obj_Wall.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 0, 0);
                     obj_Wall.SetActive(true);
                 }
                 else if (Random.value >= 0.1 && Random.value <= 0.8)
@@ -132,11 +132,12 @@ public class StageGenerator : MonoBehaviour
 
                     if (obj_Obstacle_1 == null) return;
 
-                    obj_Obstacle_1.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 0, Random.Range(-2, 1) * 10);
+                    obj_Obstacle_1.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 0, Random.Range(-2, 1) * 10);
                     obj_Obstacle_1.SetActive(true);
 
                     obj_Obstacle_1 = StageObjPooling.current.GetPooledObject_Obstacle_1();
-                    obj_Obstacle_1.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 0, Random.Range(1, 3) * 10);
+                    if (obj_Obstacle_1 == null) return;
+                    obj_Obstacle_1.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 0, Random.Range(1, 3) * 10);
                     obj_Obstacle_1.SetActive(true);
                 }
                 else
@@ -145,7 +146,7 @@ public class StageGenerator : MonoBehaviour
 
                     if (obj_Obstacle_2 == null) return;
 
-                    obj_Obstacle_2.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 0, Random.Range(-2, 3) * 10);
+                    obj_Obstacle_2.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 0, Random.Range(-2, 3) * 10);
                     obj_Obstacle_2.SetActive(true);
                 }
             }
@@ -155,11 +156,12 @@ public class StageGenerator : MonoBehaviour
 
                 if (obj_Coin == null) return;
 
-                obj_Coin.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 1, Random.Range(-2, 1) * 10);
+                obj_Coin.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 1, Random.Range(-2, 1) * 10);
                 obj_Coin.SetActive(true);
 
                 obj_Coin = StageObjPooling.current.GetPooledObject_Coin();
-                obj_Coin.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 9), 1, Random.Range(1, 3) * 10);
+                if (obj_Coin == null) return;
+                obj_Coin.transform.position = new Vector3(idx * StageTipSize - 100 + (i * 10), 1, Random.Range(1, 3) * 10);
                 obj_Coin.SetActive(true);
             }
         }
