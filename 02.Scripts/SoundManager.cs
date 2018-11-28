@@ -18,23 +18,29 @@ public class SoundManager : MonoBehaviour {
     void Awake()
     {
         if (SoundManager.instance == null)
-            SoundManager.instance = this;
-        else
-            Destroy(this.gameObject);
-        for (int i = 0; i < 2; i++)
         {
-            audioSources = GetComponents<AudioSource>();
+            SoundManager.instance = this;
+            for (int i = 0; i < 2; i++)
+            {
+                audioSources = GetComponents<AudioSource>();
+            }
+
+            audioSources[0].clip = BGMSound;
+            audioSources[0].loop = true;
+            audioSources[0].playOnAwake = true;
+            audioSources[0].Play();
+
+            if (PlayerPrefs.GetInt("SoundStatus") == 1) // 이 조건문으로 씬이 다시 로드되었을 때 사운드가 OFF 상태였다면 볼륨을 0으로 만든다
+                OffAllSound();
+
+            audioSources[1].loop = false; ;
+            audioSources[1].playOnAwake = false;
+
+            DontDestroyOnLoad(this.gameObject);
         }
 
-        audioSources[0].clip = BGMSound;
-        audioSources[0].loop = true;
-        audioSources[0].playOnAwake = true;
-        audioSources[0].Play();
-
-        audioSources[1].loop = false; ;
-        audioSources[1].playOnAwake = false;
-
-        DontDestroyOnLoad(this.gameObject);
+        else
+            Destroy(this.gameObject);
     }
 
     // Use this for initialization
