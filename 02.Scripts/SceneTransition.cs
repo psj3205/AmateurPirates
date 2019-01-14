@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneTransition : MonoBehaviour {
+public class SceneTransition : MonoBehaviour
+{
 
     Animator animator;
 
-	// Use this for initialization
-	void Start () {
+    void Start()
+    {
         animator = this.gameObject.GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    void Update()
+    {
+        // 씬 전환 오브젝트가 활성화 되면
         if (this.gameObject.activeInHierarchy)
         {
             animator.SetBool("isOpen", true);
@@ -21,9 +23,10 @@ public class SceneTransition : MonoBehaviour {
         }
     }
 
+    // 타이틀 화면으로 이동
     IEnumerator ReturnToTitle(float waitTime)
     {
         yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene(0); // 처음으로 돌아가기
+        SceneManager.LoadScene(1); // 처음으로 돌아가기
     }
 }

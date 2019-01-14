@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonManager : MonoBehaviour {
-
-    //public GameObject StartBtn;
-    //public GameObject SettingBtn;
-    //public GameObject StartMSG;
+public class ButtonManager : MonoBehaviour
+{
     public GameObject SceneTransitionImage;
     public GameObject QuitUI;
     public GameObject SoundOnBtn;
     public GameObject SoundOffBtn;
     public CameraFollow Camera;
     public PirateShipController PirateShip;
+    //public Shooter cannonShooter;
 
-    //GameObject SettingMenu; // 세팅 메뉴  불러오기 - 이메뉴는 처음에는 비활성화
-    private bool isPause = false;
-    //private bool MenuOpen = false;
+    private bool isPause = false; // 일시정지 플래그
 
     void Start()
     {
@@ -26,66 +22,57 @@ public class ButtonManager : MonoBehaviour {
             SoundOnBtn.SetActive(true);
             SoundOffBtn.SetActive(false);
         }
-        else                                       // 소리가 꺼진 상태에서는 사운드 OFF 버튼 활성화
+        else                                        // 소리가 꺼진 상태에서는 사운드 OFF 버튼 활성화
         {
             SoundOnBtn.SetActive(false);
             SoundOffBtn.SetActive(true);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isPause) //일시정지 ON
-        {
-            Time.timeScale = 0;
-        }
-        else if(!isPause) //일시정지 OFF
-        {
-            Time.timeScale = 1;
-        }
+        //일시정지 ON
+        if (isPause) Time.timeScale = 0;
+        //일시정지 OFF
+        else if (!isPause) Time.timeScale = 1;
 
+        // 안드로이드에서 뒤로가기 버튼 눌렀을 시 종료
         if (Application.platform == RuntimePlatform.Android)
             if (Input.GetKey(KeyCode.Escape))
             {
                 isPause = true; //일시정지 시작
-                ActiveQuitUI();
+                ActiveQuitUI(); // 종료 창 활성화
             }
-
-        //if (MenuOpen) //메뉴창 ON
-        //{
-        //    SettingMenu.SetActive(enabled);//GUI 창 실행
-        //}
-        //else
-        //{
-        //    SettingMenu.SetActive(false);//GUI 창 종료
-        //}
     }
 
+    // 버튼 활성화
     public void enableButton(GameObject onButton)
     {
         onButton.SetActive(true);
     }
 
-    // function to disable
+    // 버튼 비활성화
     public void disableButton(GameObject offButton)
     {
         offButton.SetActive(false);
     }
 
-    public void ClickPauseBtn() // 톱니바퀴 버튼 눌렀을때
+    // 일시정지 버튼 눌렀을 때
+    public void ClickPauseBtn()
     {
         isPause = true; //일시정지 시작
     }
 
-    public void ClickPlayBtn()
+    // 재생 버튼 눌렀을 때
+    public void ClickPlayBtn() 
     {
         isPause = false; //일시정지 종료
     }
 
-    public void ReturnToTitle()
+    // 타이틀 화면으로 돌아갈 때
+    public void ReturnToTitle() 
     {
-        SceneTransitionImage.SetActive(true);
+        SceneTransitionImage.SetActive(true); // 화면 전환 애니매이션 활성화
         //SceneManager.LoadScene(0); // 처음으로 돌아가기
     }
 
@@ -99,53 +86,41 @@ public class ButtonManager : MonoBehaviour {
         }
     }
 
+    // 종료창 활성화
     public void ActiveQuitUI()
     {
         QuitUI.SetActive(true);
     }
 
+    // 게임 종료
     public void QuitGame()
     {
         Application.Quit();
     }
 
+    // 클릭음 재생
     public void PlayClickSound()
     {
         SoundManager.instance.PlayClickSound(); // 클릭 사운드 재생
     }
 
+    // 사운드 On 함수
     public void OnAllSound()
     {
         SoundManager.instance.OnAllSound(); // 모든 사운드 ON
         PlayerPrefs.SetInt("SoundStatus", 0); // 사운드 설정 버튼 상태 기억(켜진상태:0)
     }
 
+    // 사운드 Off 함수
     public void OffAllSound()
     {
         SoundManager.instance.OffAllSound(); // 모든 사운드 OFF
         PlayerPrefs.SetInt("SoundStatus", 1); // 사운드 설정 버튼 상태 기억(꺼진상태:1)
     }
 
-    //public void ClickMenuButton() //메인메뉴로 돌아가는 버튼
+    //public void CannonBtn()
     //{
-    //    MenuOpen = false;
-    //    SceneManager.LoadScene("Title");
-    //    isPause = true;
-
+    //    cannonShooter.Active_CannonBall();
     //}
 
-    //public void ClickGoButton() //취소하고 게임을 진행할시
-    //{
-    //    MenuOpen = false;
-    //    StartCoroutine(WaitForIt());
-    //    isPause = true;
-
-
-    //}
-
-    //IEnumerator WaitForIt()
-    //{
-    //    yield return new WaitForSeconds(1.0f);
-
-    //}
 }
